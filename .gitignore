@@ -1,0 +1,10 @@
+# dependencias
+node_modules/
+
+# autenticacion
+src/auth.json
+
+# otros
+wipcommands/
+package-lock.json
+start.bat
