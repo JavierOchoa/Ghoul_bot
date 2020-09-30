@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports.run = async (bot, message, args) => {
-    let sicon = message.guild.iconURL;
+    let sicon = message.guild.iconURL();
         let serverEmbed = new Discord.MessageEmbed()
         .setDescription("Informacion del Servidor")
         .setColor("#bc10b9")

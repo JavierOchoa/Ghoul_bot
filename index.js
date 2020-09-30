@@ -49,9 +49,6 @@ fs.readdir('./wipcommands/',   (err, files) => {
 bot.on('ready', async () => {
     console.log(`${bot.user.username} is online!`)
     bot.user.setActivity("Ready to nuke!")
-//iniciar comando de twittear tienda
-    //const logChnn = bot.channels.cache.get('754959604089094245')
-    //logChnn.send('!ttt').then(message => message.delete({timeout : 2000}))
 });
 //configuracion de command hanlder
 bot.on('message', async (message) =>{
