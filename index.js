@@ -70,20 +70,9 @@ bot.on('message', async (message) => {
         message.reply("pong!");
     }
 });
-//Le dice a los usuarios que existen nuevos comandos para la infomacion relacionada con Fortnite
-bot.on('message', async (message) => {
-    const oldStats = '!fm'   
-    if (message.content === '!fmshop') {
-        return message.reply('El comando de la tienda es ;fshop');
-    } else if (message.content === '!fnbr shop') {
-        return message.reply('El comando de la tienda es ;fshop');
-    } else if (message.content.includes(oldStats)) {
-        return message.reply('El comando para los stats es ;ft USUARIO PLATAFORMA, si buscas la tienda es ;fshop');
-    }
-});
 
 //Twitea tienda de Fortnite en el reset
-const job = new cron.CronJob('10 00 19 * * *', function() {
+const job = new cron.CronJob('10 00 00 * * *', function() {
     const isChannel = bot.channels.cache.get('754959604089094245');
     isChannel.send('!tis').then(message => message.delete({timeout : 1000}))
 })
