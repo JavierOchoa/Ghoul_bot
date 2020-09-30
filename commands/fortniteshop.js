@@ -1,89 +1,26 @@
 const Discord = require('discord.js');
-const auth = require('./../src/auth.json');
+const auth = require('../src/auth.json');
+const Twit = require("twit");
+const fs = require('fs');
+const Canvas = require("discord-canvas");
+    const shop = new Canvas.FortniteShop();
 
 module.exports.run = async (bot, message, args) => {
-    let request = require('request-promise');
-    let options = {
-        url: 'https://fnbr.co/API/shop',
-        headers: {
-            'x-api-key': auth.xapikey
-        },
-        json: true
-    };
+    const favStu = 'bob'
+    const image = await shop
+        .setToken(auth.xapikey)
+        .lang("es")
+        .dateFormat("dddd D MMMM YYYY")
+        .setText("header", "Tienda de Fortnite")
+        .setText("daily", "Diario")
+        .setText("featured", "DESTACADO")
+        .setText("date", "Tienda del {date}")
+        .setText("footer", "ReivaJ - Proporcionado por fnbr.co")
+        .toAttachment();
 
-    request(options).then(function(shopData) {
-        for (let i = 0; i < shopData.data.featured.length; i++) {
-            //Color del item segun la rareza
-            function cLeg() {
-                if (shopData.data.featured[i].rarity === 'legendary') {
-                    return '#fc692a';
-                } else if (shopData.data.featured[i].rarity === 'epic') {
-                    return '#bd29fc';
-                } else if (shopData.data.featured[i].rarity === 'rare') {
-                    return '#28aefc';
-                } else if (shopData.data.featured[i].rarity === 'uncommon') {
-                    return '#47fc28';
-                }
-            }
-            //elimina 'false' de la descripcion del embed cuando no existe descripcion
-            function cDesc(){
-                if (shopData.data.featured[i].description === false) {
-                    return ' ';
-                } else {
-                    return shopData.data.featured[i].description;
-                }
-            }
+    const attachment = new Discord.MessageAttachment(image, 'FortniteShop.png');
 
-            let embed1 = new Discord.RichEmbed()
-            
-            .setTitle(shopData.data.featured[i].name)
-            .setDescription(shopData.data.featured[i].description)
-            .setThumbnail(shopData.data.featured[i].images.icon)
-            .setColor(cLeg())
-            .addField('Tipo', shopData.data.featured[i].readableType)
-            .addField('Precio', `${shopData.data.featured[i].price} vbucks`)
-            .addField('Rareza', shopData.data.featured[i].rarity)
-            
-            message.channel.send(embed1)
-
-            
-        }
-
-        for (let i = 0; i < shopData.data.daily.length; i++) {
-            //Color del item segun la rareza
-            function cLeg() {
-                if (shopData.data.daily[i].rarity === 'legendary') {
-                    return '#fc692a';
-                } else if (shopData.data.daily[i].rarity === 'epic') {
-                    return '#bd29fc';
-                } else if (shopData.data.daily[i].rarity === 'rare') {
-                    return '#28aefc';
-                } else if (shopData.data.daily[i].rarity === 'uncommon') {
-                    return '#47fc28';
-                }
-            }
-            //elimina 'false' de la descripcion del embed cuando no existe descripcion
-            function cDesc(){
-                if (shopData.data.daily[i].description === false) {
-                    return ' ';
-                } else {
-                    return shopData.data.daily[i].description;
-                }
-            }
-
-            let embed2 = new Discord.RichEmbed()
-
-            .setTitle(shopData.data.daily[i].name)
-            .setDescription(cDesc())
-            .setThumbnail(shopData.data.daily[i].images.icon)
-            .setColor(cLeg())
-            .addField('Tipo', shopData.data.daily[i].readableType)
-            .addField('Precio', `${shopData.data.daily[i].price} vbucks`)
-            .addField('Rareza', shopData.data.daily[i].rarity)
-
-            message.channel.send(embed2)
-        }
-    });
+    message.channel.send(attachment);
 }
 
 module.exports.help = {

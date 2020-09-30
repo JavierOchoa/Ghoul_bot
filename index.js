@@ -1,7 +1,11 @@
 const botconfig = require('./src/botconfig.json');
 const auth = require('./src/auth.json');
 const Discord = require('discord.js');
+const ReactionRole = require('reaction-role');
 const fs = require('fs');
+const cron = require('cron');
+const { brotliCompress } = require('zlib');
+
 const bot = new Discord.Client({disableEveryone: true});
 bot.commands = new Discord.Collection();
 
@@ -45,10 +49,13 @@ fs.readdir('./wipcommands/',   (err, files) => {
 bot.on('ready', async () => {
     console.log(`${bot.user.username} is online!`)
     bot.user.setActivity("Ready to nuke!")
+//iniciar comando de twittear tienda
+    //const logChnn = bot.channels.cache.get('754959604089094245')
+    //logChnn.send('!ttt').then(message => message.delete({timeout : 2000}))
 });
 //configuracion de command hanlder
 bot.on('message', async (message) =>{
-    if (message.author.bot) return;
+    //if (message.author.bot) return;
 
     let prefix = botconfig.prefix;
     let messageArray = message.content.split (" ");
@@ -77,5 +84,18 @@ bot.on('message', async (message) => {
         return message.reply('El comando para los stats es ;ft USUARIO PLATAFORMA, si buscas la tienda es ;fshop');
     }
 });
+
+//Twitea tienda de Fortnite en el reset
+const job = new cron.CronJob('10 00 19 * * *', function() {
+    const isChannel = bot.channels.cache.get('754959604089094245');
+    isChannel.send('!tis').then(message => message.delete({timeout : 1000}))
+})
+job.start();
+//Añadir reacciones a mensaje de bienvenida
+const system = new ReactionRole(auth.token);
+let option1 = system.createOption("💹", "754772144512303114");
+system.createMessage("760706392260345916", "754901391385952356", 1, null, option1);
+system.init();
+
 
 bot.login(auth.token)
