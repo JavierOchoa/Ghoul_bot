@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args) => {
         .setText("daily", "Diario")
         .setText("featured", "DESTACADO")
         .setText("date", "Tienda del {date}")
-        .setText("footer", "ReivaJ - Proporcionado por fnbr.co")
+        .setText("footer", "ReivaJ#2077")
         .toAttachment();
 
     const attachment = new Discord.MessageAttachment(image, 'FortniteShop.png');
