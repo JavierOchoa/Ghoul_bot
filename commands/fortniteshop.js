@@ -17,7 +17,13 @@ module.exports.run = async (bot, message, args) => {
 
     const attachment = new Discord.MessageAttachment(image, 'FortniteShop.png');
 
-    message.channel.send(attachment);
+    const isChannel = bot.channels.cache.get('754959604089094245')
+    try {
+        isChannel.send('<@&754772144512303114> esta es la tienda de hoy', attachment);
+    } catch(err) {
+        console.error(err);
+        isChannel.send('<@&754772144512303114> error en la tienda de hoy');
+    }
 }
 
 module.exports.help = {

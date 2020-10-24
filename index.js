@@ -75,7 +75,7 @@ bot.on('message', async (message) => {
 const job = new cron.CronJob('20 00 00 * * *', function() {
     const isChannel = bot.channels.cache.get('754959604089094245');
     isChannel.send('!fshop').then(message => message.delete({timeout : 1000}))
-})
+});
 job.start();
 
 //Añadir reacciones a mensaje de bienvenida
