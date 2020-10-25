@@ -7,17 +7,22 @@ module.exports.run = async (bot, message, args) => {
     let username = args[0];
     if(!username) return message.reply('Debes mencionar un usuario')
 
-    message.react('769815551413321749')
+    message.react('769828887886037052')
+        .then(() => message.react('769815551413321749'))
         .then(() => message.react('769815588323196928'))
         .then(() => message.react('769815632060874762'));
     const filter = (reaction, user) => {
-	        return ['kbm', 'gamepad', 'touch'].includes(reaction.emoji.name) && user.id === message.author.id;
+	        return ['global', 'kbm', 'gamepad', 'touch'].includes(reaction.emoji.name) && user.id === message.author.id;
     };
     message.awaitReactions(filter, { max: 1, time: 10000, errors: ['time'] })
 	    .then(collected => {
 		    let reaction = collected.first();
 
-            if (reaction.emoji.name === 'kbm') {
+            if(reaction.emoji.name === 'global') {
+                platform = 'all';
+                platformIco = 'https://i.imgur.com/V30Q6qI.png'
+                message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
+            } else if (reaction.emoji.name === 'kbm') {
                 platform = 'kbm';
                 platformIco = 'https://i.imgur.com/abKGIDi.png'
                 message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
@@ -41,7 +46,7 @@ module.exports.run = async (bot, message, args) => {
                 .setThumbnail(platformIco)
                 .setDescription(`Plataforma: ${res.platform}`)
                 .addFields(
-                    { name: '> ESTADISTICAS TOTALES', value: `Estadisticas generales en ${res.platform}`},
+                    { name: '> RESUMEN DE ESTADISTICAS', value: `Resumen de los distintos modos de juego`},
                     { name: 'Victorias', value: res.stats.lifetime.wins, inline: true },
                     { name: 'Kills', value: res.stats.lifetime.kills, inline: true },
                     { name: 'Nº Partidas', value: res.stats.lifetime.matches, inline: true },
