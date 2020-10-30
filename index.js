@@ -1,4 +1,4 @@
-const botconfig = require('./src/botconfig.json');
+//const botconfig = require('./src/botconfig.json');
 const auth = require('./src/auth.json');
 const Discord = require('discord.js');
 const ReactionRole = require('reaction-role');
@@ -11,7 +11,7 @@ bot.commands = new Discord.Collection();
 
 //verificar la presencia de los comandos
 fs.readdir('./commands/',   (err, files) => {
- 
+    console.log("Se cargaran los comandos...")
     if (err) console.log(err);
 
     let jsfile = files.filter(f => f.split('.').pop() === 'js')
@@ -25,11 +25,12 @@ fs.readdir('./commands/',   (err, files) => {
         console.log(`Se cargo ${f}`);
         bot.commands.set(props.help.name, props);
     });
+    console.log("Se han cargado todos los comandos satisfactoriamente")
 });
 
 //verificar la presencia de los comandos que aun no estan listos
 fs.readdir('./wipcommands/',   (err, files) => {
- 
+    console.log("Se cargaran los comandos de prueba...")
     if (err) console.log(err);
 
     let jsfile = files.filter(f => f.split('.').pop() === 'js')
@@ -43,18 +44,19 @@ fs.readdir('./wipcommands/',   (err, files) => {
         console.log(`Se cargo ${f}`);
         bot.commands.set(props.help.name, props);
     });
+    console.log("Se han cargado todos los comandos de prueba satisfactoriamente")
 });
 
 //Actividad del bot
 bot.on('ready', async () => {
-    console.log(`${bot.user.username} is online!`)
+    console.log(`${bot.user.username} esta en linea!`)
     bot.user.setActivity("Ready to nuke!")
 });
 //configuracion de command hanlder
 bot.on('message', async (message) =>{
     //if (message.author.bot) return;
 
-    let prefix = botconfig.prefix;
+    let prefix = auth.prefix;
     let messageArray = message.content.split (" ");
     let cmd = messageArray[0] ;
     let args = messageArray.slice(1);
