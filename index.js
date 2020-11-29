@@ -1,4 +1,3 @@
-//const botconfig = require('./src/botconfig.json');
 const auth = require('./src/auth.json');
 const Discord = require('discord.js');
 const ReactionRole = require('reaction-role');
