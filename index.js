@@ -72,18 +72,20 @@ bot.on('message', async (message) => {
     }
 });
 
-//Twitea tienda de Fortnite en el reset
+//Pedir informacion de Fortnite
 const job = new cron.CronJob('20 00 00 * * *', function() {
-    const isChannel = bot.channels.cache.get('754959604089094245');
-    isChannel.send('!fshop').then(message => message.delete({timeout : 1000}))
+    const isShopChannel = bot.channels.cache.get('754959604089094245');
+    const isSTWChannel = bot.channels.cache.get('815011946432299029');
+    isShopChannel.send('!fshop').then(message => message.delete({timeout : 1000}))
+    isShopChannel.send('!vbucks').then(message => message.delete({timeout : 1000}))
 });
 job.start();
 
 //Añadir reacciones a mensaje de bienvenida
-const system = new ReactionRole(auth.token);
+/*const system = new ReactionRole(auth.token);
 let option1 = system.createOption("💹", "754772144512303114");
 system.createMessage("760706392260345916", "754901391385952356", 1, null, option1);
-system.init();
+system.init();*/
 
 
 bot.login(auth.token)
