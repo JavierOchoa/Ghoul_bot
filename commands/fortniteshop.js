@@ -16,14 +16,12 @@ module.exports.run = async (bot, message, args) => {
         .toAttachment();
 
     const attachment = new Discord.MessageAttachment(image, 'FortniteShop.png');
-
+    const peelyShop = ('https://api.peely.de/cdn/current/shop.png');
     const isChannel = bot.channels.cache.get('754959604089094245')
-    try {
-        isChannel.send('<@&754772144512303114> esta es la tienda de hoy', attachment);
-    } catch(err) {
-        console.error(err);
-        isChannel.send('<@&754772144512303114> error en la tienda de hoy');
-    }
+    const testChannel = bot.channels.cache.get('510264966541213711')
+    
+    testChannel.send('okurr esta es la tienda de hoy', peelyShop);
+    isChannel.send('<@&754772144512303114> esta es la tienda de hoy', attachment);
 }
 
 module.exports.help = {

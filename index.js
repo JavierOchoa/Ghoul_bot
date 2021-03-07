@@ -73,7 +73,7 @@ bot.on('message', async (message) => {
 });
 
 //Pedir informacion de Fortnite
-const job = new cron.CronJob('20 00 00 * * *', function() {
+const job = new cron.CronJob('20 00 10 * * *', function() {
     const isShopChannel = bot.channels.cache.get('754959604089094245');
     const isSTWChannel = bot.channels.cache.get('815011946432299029');
     isShopChannel.send('!fshop').then(message => message.delete({timeout : 1000}))
